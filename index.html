@@ -1,57 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple Quiz</title>
+    <title>Map Quiz</title>
     <style>
         body {
             font-family: sans-serif;
-            margin: 20px;
+            text-align: center;
         }
-        .question {
-            margin-bottom: 20px;
+        #map-container {
+            position: relative;
+            width: 600px; /* Adjust as needed */
+            height: 400px; /* Adjust as needed */
+            margin: 20px auto;
         }
-        .options label {
-            display: block;
-            margin-bottom: 5px;
+        #map {
+            width: 100%;
+            height: 100%;
         }
-        #result {
-            margin-top: 20px;
+        #answer-feedback {
+            margin-top: 10px;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="question">
-        <p>What is 2 + 2?</p>
-        <div class="options">
-            <label><input type="radio" name="q1" value="1"> 1</label>
-            <label><input type="radio" name="q1" value="2"> 2</label>
-            <label><input type="radio" name="q1" value="4"> 4</label>
-            <label><input type="radio" name="q1" value="6"> 6</label>
-        </div>
+    <h1>Map Quiz</h1>
+    <p>Click on the country of France.</p>
+
+    <div id="map-container">
+        <img id="map" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Europe-countries-en.svg/1200px-Europe-countries-en.svg.png" alt="Europe Map">
+        <div id="answer-feedback"></div>
     </div>
 
-    <button onclick="checkAnswer()">Submit</button>
-    <div id="result"></div>
-
     <script>
-        function checkAnswer() {
-            let answer = document.querySelector('input[name="q1"]:checked');
-            let resultDiv = document.getElementById('result');
+        const map = document.getElementById('map');
+        const feedback = document.getElementById('answer-feedback');
 
-            if (answer) {
-                if (answer.value === "4") {
-                    resultDiv.textContent = "Correct!";
-                    resultDiv.style.color = "green";
-                } else {
-                    resultDiv.textContent = "Incorrect.";
-                    resultDiv.style.color = "red";
-                }
+        map.addEventListener('click', (event) => {
+            const x = event.offsetX;
+            const y = event.offsetY;
+
+            // Very simplified logic (you'll need more precise coordinates for real use).
+            // These coordinates are approximate for France on the provided map.
+            if (x > 250 && x < 350 && y > 150 && y < 250) {
+                feedback.textContent = 'Correct!';
+                feedback.style.color = 'green';
             } else {
-                resultDiv.textContent = "Please select an answer.";
-                resultDiv.style.color = "orange";
+                feedback.textContent = 'Incorrect. Try again.';
+                feedback.style.color = 'red';
             }
-        }
+        });
     </script>
 </body>
 </html>
