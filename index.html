@@ -8,7 +8,6 @@
             font-family: sans-serif;
             text-align: center;
         }
-<<<<<<< HEAD
 
         #mapontainer {
             position: relative;
@@ -19,22 +18,11 @@
             margin: 20px auto;
         }
 
-=======
-        #map-container {
-            position: relative;
-            width: 600px; /* Adjust as needed */
-            height: 400px; /* Adjust as needed */
-            margin: 20px auto;
-        }
->>>>>>> 98f4bbb30d909575b6ea82c483e453a1919bb1fe
         #map {
             width: 100%;
             height: 100%;
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> 98f4bbb30d909575b6ea82c483e453a1919bb1fe
         #answer-feedback {
             margin-top: 10px;
             font-weight: bold;
@@ -46,7 +34,6 @@
     <h1>Map Quiz</h1>
     <p>Click on the country of France.</p>
 
-<<<<<<< HEAD
     <div id="mapcontainer">
         <svg height="700" id="svg1" version="1.1" viewBox="0 0 700 700" width="700" xml:space="preserve"
             xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
@@ -229,10 +216,6 @@
             <circle cx="334.26703" cy="577.91962" id="The Vatican" r="9.779007"
                 style="fill:#aeaeae;fill-opacity:1;stroke:#cb3f3f;stroke-width:4.47105;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
         </svg>
-=======
-    <div id="map-container">
-        <img id="map" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Europe_countries.svg/1600px-Europe_countries.svg.png" alt="Europe Map">
->>>>>>> 98f4bbb30d909575b6ea82c483e453a1919bb1fe
         <div id="answer-feedback"></div>
     </div>
 
@@ -240,7 +223,6 @@
         const map = document.getElementById('map');
         const feedback = document.getElementById('answer-feedback');
 
-<<<<<<< HEAD
         function updateFeedback(printe) {
             feedback.textContent = printe
         }
@@ -619,22 +601,3 @@
 </body>
 
 </html>
-=======
-        map.addEventListener('click', (event) => {
-            const x = event.offsetX;
-            const y = event.offsetY;
-
-            // Very simplified logic (you'll need more precise coordinates for real use).
-            // These coordinates are approximate for France on the provided map.
-            if (x > 250 && x < 350 && y > 150 && y < 250) {
-                feedback.textContent = 'Correct!';
-                feedback.style.color = 'green';
-            } else {
-                feedback.textContent = 'Incorrect. Try again.';
-                feedback.style.color = 'red';
-            }
-        });
-    </script>
-</body>
-</html>
->>>>>>> 98f4bbb30d909575b6ea82c483e453a1919bb1fe
