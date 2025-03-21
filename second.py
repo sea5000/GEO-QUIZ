@@ -7,7 +7,7 @@ base = """"""
 # });
 ctxt = """Albania  Andorra  Austria  Belarus  Belgium  Bosnia and Herzegovina  Bulgaria  Croatia  Czechia  Denmark  Estonia  Finland  France  Germany  Greece  Hungary  Iceland  Ireland  Italy  Latvia  Liechtenstein  Lithuania  Luxembourg  Malta  Moldova  Monaco  Montenegro  Netherlands  North Macedonia  Norway  Poland  Portugal  Romania  Russia  San Marino  Serbia  Slovakia  Slovenia  Spain  Sweden  Switzerland  The Vatican  Ukraine  United Kingdom"""
 clist = ctxt.split("  ")
-
+print(clist)
 # ctxt2 = """Albania  Andorra  Austria  Belarus  Belgium  Bosnia and Herzegovina  Bulgaria  Croatia  Czechia  Denmark  Estonia  Finland  France  Germany  Greece  Hungary  Iceland  Ireland  Italy  Latvia  Liechtenstein  Lithuania  Luxembourg  Malta  Moldova  Monaco  Montenegro Netherlands  North Macedonia  Norway  Poland  Portugal  Romania  Russia  San Marino  Serbia  Slovakia  Slovenia  Spain  Sweden  Switzerland  The Vatican  Ukraine  United Kingdom"""
 # clist2 = ctxt2.split("  ")
 # # # for i in clist:

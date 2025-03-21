@@ -12,7 +12,7 @@ import lxml
 with open('C:/Users/Spencer/Desktop/Europe3.svg','r') as file:
     txt = file.read()
     file.close()
-with open('C:/Users/Spencer/Desktop/Europe3-1.svg', 'r') as file:
+with open('C:/Users/Spencer/Desktop/Europe3-1-2.svg', 'r') as file:
     txt2 = file.read()
     file.close()
 
@@ -48,5 +48,5 @@ for circle in circles:
                 j['id'] = label
         #path['id'] = label
 #print(soup2.prettify())
-with open('./Forms-HTML-Element-Map/EuropeF.svg','w') as file:
+with open('./Forms-HTML-Element-Map/EuropeF1.svg','w') as file:
     file.writelines(str(soup2).replace('svg:',""))
