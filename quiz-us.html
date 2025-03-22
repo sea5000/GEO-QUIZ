@@ -71,7 +71,7 @@
             <a1 id="prompt"></a1>
         </div>
 
-        <svg width="711.14758" height="447.96585" version="1.1" id="svg160" xmlns="http://www.w3.org/2000/svg"
+        <svg id='USMap' width="711.14758" height="447.96585" version="1.1" id="svg160" xmlns="http://www.w3.org/2000/svg"
             xmlns:svg="http://www.w3.org/2000/svg" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
             xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
             <defs id="defs1">
@@ -445,38 +445,38 @@ Place this code in the empty space below. */
     </script>
 
     <script>
-        let response = {}; //'name':,'country':,'quiz':[]
+        let response = {}; //'name':,'state':,'quiz':[]
 
         // Logic for generating 20 random countries from the 40.
-        let cList = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
-        let que = []
+        let sList = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
+        let sQue = []
         for (let i = 0; i < 20; i++) {
-            let fList = cList.filter((country) => !que.includes(country))
+            let fList = sList.filter((state) => !sQue.includes(state))
             let item = fList[Math.floor(Math.random() * fList.length)]
-            que.push(item)
+            sQue.push(item)
             console.log(item)
         };
 
 
         //Starting the quiz
         let qNum = 0
-        document.getElementById('prompt').innerHTML = `Where is <b>${que[qNum]}</b> located?` //Initial country question
+        document.getElementById('prompt').innerHTML = `Where is <b>${sQue[qNum]}</b> located?`
 
-        function setPrompt(country) {
-            document.getElementById('prompt').innerHTML = `Where is <b>${country}</b> located?`
+        function setPrompt(state) {
+            document.getElementById('prompt').innerHTML = `Where is <b>${state}</b> located?`
         }
         let quiz = {}
         let score = 0
         document.getElementById('Qsubmit').addEventListener('click', () => {
             if (qNum != 19) {
-                if (guess[1] == que[qNum]) {
+                if (guess[1] == sQue[qNum]) {
                     score += 1
                 };
-                let cResponse = { 'guess': guess[1], 'answer': que[qNum] }
+                let cResponse = { 'guess': guess[1], 'answer': sQue[qNum] }
                 quiz[qNum] = cResponse
                 qNum += 1
                 document.getElementById('count').innerText = `Q: ${qNum + 1} of 20`
-                setPrompt(que[qNum])
+                setPrompt(sQue[qNum])
                 guess[0].style.fill = guess[2]
                 console.log(quiz)
             } else {
@@ -512,20 +512,20 @@ Place this code in the empty space below. */
         let elements = {};
 
 
-        cList.forEach(country => {
-            let variable = country//.toLowerCase().replace(" ", "_");
-            variable = document.getElementById(country);
+        sList.forEach(state => {
+            let variable = state//.toLowerCase().replace(" ", "_");
+            variable = document.getElementById(state);
             if (variable) {
-                elements[country] = variable;
+                elements[state] = variable;
             }
-            //console.log(country, elements[country]);
+            //console.log(state, elements[state]);
 
             variable.addEventListener('click', () => {
-                console.log(country)
+                console.log(state)
                 changeElementColor(guess, variable)
                 guess[0] = variable
-                guess[1] = country
-                updateFeedback(country)
+                guess[1] = state
+                updateFeedback(state)
             });
         });
         // document.getElementById('Qsubmit').addEventListener('click', () => {
@@ -536,7 +536,7 @@ Place this code in the empty space below. */
 
         //     // Collect answers in an object
         //     const response = {
-        //         "country": guess[1],
+        //         "state": guess[1],
         //         //question1: question1,
         //         //question2: question2,
         //         timestamp: new Date()  // Timestamp of submission
