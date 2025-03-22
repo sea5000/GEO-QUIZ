@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Map Quiz</title>
+    <title>Map Quiz - Europe</title>
     <style>
         body {
             font-family: sans-serif;
@@ -12,9 +12,7 @@
         #mapontainer {
             position: relative;
             width: 600px;
-            /* Adjust as needed */
             height: 400px;
-            /* Adjust as needed */
             margin: 20px auto;
         }
 
@@ -44,7 +42,7 @@
 
         #header {
             font-size: 2rem;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             padding-top: 40vh;
             transition: padding-top 1s ease;
             background-color: #48892b;
@@ -55,8 +53,6 @@
             font-size: 1rem;
             cursor: pointer;
         }
-
-        /* Content section styles */
         #start {
             margin-top: 50px;
             text-align: center;
@@ -82,7 +78,7 @@
 
 
     <div id="mapcontainer" style="display:none;">
-        <p id="prompt"></p>
+        <div><h3 id="count">Q: 1 of 20</h3><a1 id="prompt"></a1></div>
         <!-- Click on the country of France. -->
         <svg height="450" id="svg1" version="1.1" viewBox="0 0 450 450" width="450" xml:space="preserve"
             xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
@@ -2778,22 +2774,28 @@
         
         //Starting the quiz
         let qNum = 0
-        document.getElementById('prompt').innerText = `Where is ${que[qNum]} located?` //Initial country question
+        document.getElementById('prompt').innerHTML = `Where is <b>${que[qNum]}</b> located?` //Initial country question
 
         function setPrompt(country) {
-            document.getElementById('prompt').innerText = `Where is ${country} located?`
+            document.getElementById('prompt').innerHTML = `Where is <b>${country}</b> located?`
         }
         let quiz = {}
         let score = 0
         document.getElementById('Qsubmit').addEventListener('click', () => {
-            if (guess[1] == que[qNum]) {
-                score += 1
+            if (qNum != 19){
+                if (guess[1] == que[qNum]) {
+                    score += 1
+                };
+                let cResponse = {'guess':guess[1],'answer':que[qNum]}
+                quiz[qNum] = cResponse
+                qNum +=1
+                document.getElementById('count').innerText = `Q: ${qNum+1} of 20`
+                setPrompt(que[qNum])
+                guess[0].style.fill=guess[2]
+                console.log(quiz)
+            } else {
+                document.getElementById('mapcontainer').style.display = 'none'
             };
-            let cResponse = {'guess':guess[1],'answer':que[qNum]}
-            quiz[qNum] = cResponse
-            qNum +=1
-            setPrompt(que[qNum])
-            console.log(quiz)
         });
 
 
@@ -2801,7 +2803,7 @@
         const feedback = document.getElementById('answer-feedback');
 
         let guess = [, ,]; // Element, Name, Color
-        let transition
+        //let transition
         function changeElementColor(guess, current) {
             if (guess[0] != current) {
                 if (guess[2]) {
