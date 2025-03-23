@@ -7,6 +7,7 @@
         body {
             font-family: sans-serif;
             text-align: center;
+            background-color: grey;
         }
 
         #mapontainer {
@@ -58,6 +59,14 @@
             margin-top: 50px;
             text-align: center;
         }
+
+        .wrong {
+            background-color: #cb3f3f;
+        }
+
+        .right {
+            background-color: #48892b;
+        }
     </style>
 </head>
 
@@ -80,9 +89,10 @@
 
     <div id="mapcontainer" style="display:none;">
         <div id="testLocator">
-            <h3 id="count">Q: 1 of 20</h3>
+            <h3 id="count">Q: 1 of 40</h3>
             <a1 id="prompt"></a1>
         </div>
+        <button id="Qsubmit" type="submit ">Submit</button>
         <!-- Click on the country of France. -->
         <svg id="EuropeMap" height="450" id="svg1" version="1.1" viewBox="0 0 450 450" width="450" xml:space="preserve"
             xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
@@ -3053,20 +3063,23 @@ Place this code in the empty space below. */
         </svg>
 
         <div id="answer-feedback" style="display:none"></div>
-        <button id="Qsubmit" type="submit ">Submit</button>
+
     </div>
     <div id="results" style="display:none;flex-direction: column;">
         <h1>RESULTS!</h1>
-        <table>
-            <tr>
+        <table style="display: flex; flex-direction: column; align-items: center;">
+            <tr style='display: flex;justify-content: space-around; gap:20vw'>
                 <th>Europe</th>
                 <th>US States</th>
             </tr>
-            <tr>
-                <td id='USdata'></td>
-                <td id="EUdata"></td>
-            </tr>
         </table>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+
+            <table id='USdata' style="width:50vw">
+            </table>
+            <table id='EUdata' style="width:50vw">
+            </table>
+        </div>
     </div>
 
     <script type="module">
@@ -3099,7 +3112,7 @@ Place this code in the empty space below. */
         document.getElementById("start-button").addEventListener("click", function () {
             // Move the header to the top
             console.log('click');
-            document.getElementById("header").style.paddingTop = '5vh';
+            document.getElementById("header").style.paddingTop = '0';
 
             // After animation finishes, show the next content
             setTimeout(function () {
@@ -3131,7 +3144,7 @@ Place this code in the empty space below. */
             cQue.push(item)
             console.log(item)
         };
-
+        let Que = []
         let sList = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
         let sQue = []
         for (let i = 0; i < 20; i++) {
@@ -3140,35 +3153,43 @@ Place this code in the empty space below. */
             sQue.push(item)
             console.log(item)
         };
+        cQue.forEach((item) => Que.push(item))
+        sQue.forEach((item) => Que.push(item))
 
 
         //Starting the quiz
         let qNum = 0
         let quiz = {}
+        let quizE = {}
+        let quizU = {}
+        //let dQue = cQue
         let score = 0
         let test = 'europe'
         let guessed = false
         let scoreEurope = 0
         let scoreUS = 0
+        let europeTable = ''
+        let usTable = ''
         function makeResults() {
-            let europeTable = ''
-            let usTable = ''
+            europeTable = ''
+            usTable = ''
             for (const [key, value] of Object.entries(quiz)) {
                 let correct
-                if (value['guess'] == value['answer']){
+                if (value['guess'] == value['answer']) {
                     correct = 'right'
                 } else {
                     correct = 'wrong'
                 };
-                if (key <= 20){
-                    europeTable.push(`<tr><td class='${correct}''>${value['guess']}</td><td>${value['answer']}</td>`)
+                if (key <= 20) {
+                    europeTable = europeTable.concat('', `<tr><td class='${correct}''>${value['guess']}</td><td>${value['answer']}</td></tr>`)
                 } else {
-                    usTable.push(`<tr><td class='${correct}''>${value['guess']}</td><td>${value['answer']}</td>`)
+                    usTable = usTable.concat('', `<tr><td class='${correct}''>${value['guess']}</td><td>${value['answer']}</td>`)
                 };
-                document.getElementById('EUdata').innerHTML = europeTable
-                document.getElementById('USdata').innerHTML = usTable
+
                 //console.log(`${key}: ${value}`);
             }
+            document.getElementById('EUdata').innerHTML = europeTable
+            document.getElementById('USdata').innerHTML = usTable
         };
 
         document.getElementById('prompt').innerHTML = `Where is <b>${cQue[qNum]}</b> located?` //Initial country question
@@ -3176,51 +3197,112 @@ Place this code in the empty space below. */
         function setPrompt(country) {
             document.getElementById('prompt').innerHTML = `Where is <b>${country}</b> located?`
         }
-
+        let dump = quizE
+        let prevTestState
         document.getElementById('Qsubmit').addEventListener('click', () => {
-            if (test == 'europe') {
-                dQue = cQue
-            } else {
-                dQue = sQue
-            }
+            // if (test == 'europe') {
+            //     dQue = cQue
+            // } else {
+            //     dQue = sQue
+            // };
             if (guessed == true) {
-                if (qNum == 19) {
-                    qNum = 0;
-                    if (test == 'europe'){
-                        test = 'us';
+                let cResponse = { 'answer': Que[qNum], 'guess': guess[1], 'test': test } // save the response and the answer
+                guess[0].style.fill = guess[2] //resets the color of the picked element
+                document.getElementById('count').innerText = `Q: ${qNum + 2} of 40` //updates the question count
+                setPrompt(Que[qNum + 1])  //updates the display prompt with the current country to guess
+                if (qNum == 19 || qNum == 39) { // changes the board to the next map.
+                    if (test == 'europe') {
+                        quizE = dump
+                        if (guess[1] == Que[qNum]) {
+                            scoreEurope += 1
+                        }
+                        test = 'us'
+                        //qNum = 0
                         setPrompt(sQue[0]);
-                        document.getElementById('count').innerText = `Q: ${qNum + 1} of 20`;
                         document.getElementById('EuropeMap').style.display = 'none';
                         document.getElementById('header').style.backgroundColor = "#6467a2";
                         document.getElementById('USMap').style.display = "block";
                         scoreEurope = score
                         score = 0
+                        qNum += 1
                     } else if (test == 'us') {
+                        quizU = dump
                         scoreUS = score
                         test = 'results';
-                        setPrompt(sQue[0]);
-                        document.getElementById('count').innerText = `Q: ${qNum + 1} of 20`;
+                        makeResults()
+                        //qNum = 0
+                        //setPrompt(sQue[0]);
                         document.getElementById('mapcontainer').style.display = "none";
                         document.getElementById('header').style.backgroundColor = "#bf1d1d";
                         document.getElementById('results').style.display = 'flex';
-                    };
-                    
+                    }
                 } else {
-                    if (qNum <= 19) {
-                        qNum += 1
-                        document.getElementById('count').innerText = `Q: ${qNum + 1} of 20`
-                        if (guess[1] == dQue[qNum]) {
-                            score += 1
-                        };
-                        let cResponse = { 'guess': guess[1], 'answer': dQue[qNum] }
-                        setPrompt(dQue[qNum])
-                        quiz[qNum] = cResponse
-                        guess[0].style.fill = guess[2]
-                        console.log(quiz)
-                    };
-                };
-                guessed = false;
-            };
+                    quiz[qNum] = cResponse
+                    // if (test == 'us'){
+                    //     quiz[qNum] = cResponse
+                    // } else {
+                    //     quiz[qNum] = cResponse
+                    // }
+                    if (guess[1] == Que[qNum]) {
+                        scoreUS += 1
+                    }
+                    qNum += 1
+                    //document.getElementById('count').innerText = `Q: ${qNum + 1} of 40`
+                    //guess[0].style.fill = guess[2]
+                    console.log(quiz)
+                }
+                guessed = false
+            }
+            // if (guessed == true) {
+            //     guess[0].style.fill = guess[2]
+            //     document.getElementById('count').innerText = `Q: ${qNum + 2} of 40`
+            //     setPrompt(dQue[qNum+1])
+            //     if (qNum == 19 || qNum == 39) {
+            //         //  qNum = 0;
+            //         if (test == 'europe'){
+            //             test = 'us';
+
+            //             qNum = 0
+            //             //setPrompt(sQue[0]);
+            //             document.getElementById('EuropeMap').style.display = 'none';
+            //             document.getElementById('header').style.backgroundColor = "#6467a2";
+            //             document.getElementById('USMap').style.display = "block";
+            //             scoreEurope = score
+            //             score = 0
+            //         } else if (test == 'us') {
+            //             scoreUS = score
+            //             test = 'results';
+            //             makeResults()
+            //             qNum = 0
+            //             //setPrompt(sQue[0]);
+            //             document.getElementById('mapcontainer').style.display = "none";
+            //             document.getElementById('header').style.backgroundColor = "#bf1d1d";
+            //             document.getElementById('results').style.display = 'flex';
+            //         };
+
+            //     } else {
+            //         if (qNum <= 19) {
+            //             dump[qNum] = cResponse
+            //             if (test == 'europe') {
+            //                 quizE = dump
+            //                 if (guess[1] == dQue[qNum]) {
+            //                     scoreEurope += 1
+            //                 }
+            //             } else {
+            //                  quizU = dump
+            //                 if (guess[1] == dQue[qNum]) {
+            //                     scoreUS += 1
+            //                 }
+            //             }
+            //             qNum += 1
+            //             //document.getElementById('count').innerText = `Q: ${qNum + 1} of 40`
+            //             //guess[0].style.fill = guess[2]
+            //             console.log(quiz)
+
+            //         };
+            //     };
+            //     guessed = false;
+            // };
         });
 
 
@@ -3251,7 +3333,7 @@ Place this code in the empty space below. */
 
         let elements = {};
 
-        function listListener(list){
+        function listListener(list) {
             list.forEach(country => {
                 let variable = country//.toLowerCase().replace(" ", "_");
                 variable = document.getElementById(country);
