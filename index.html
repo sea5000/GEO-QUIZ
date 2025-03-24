@@ -707,9 +707,6 @@ Place this code in the empty space below. */
         //Starting the quiz
         let qNum = 0
         let quiz = {}
-        let quizE = {}
-        let quizU = {}
-        //let dQue = cQue
         let score = 0
         let test = 'europe'
         let guessed = false
@@ -743,115 +740,47 @@ Place this code in the empty space below. */
 
         document.getElementById('prompt').innerHTML = `Where is <b>${cQue[qNum]}</b> located?` //Initial country question
 
+        function scoreSet() {
+            if (guess[1] == Que[qNum]) {
+                    score += 1
+            }
+        }
+
         function setPrompt(country) {
             document.getElementById('prompt').innerHTML = `Where is <b>${country}</b> located?`
         }
-        let dump = quizE
-        let prevTestState
+
         document.getElementById('Qsubmit').addEventListener('click', () => {
-            // if (test == 'europe') {
-            //     dQue = cQue
-            // } else {
-            //     dQue = sQue
-            // };
             if (guessed == true) {
                 let cResponse = { 'answer': Que[qNum], 'guess': guess[1], 'test': test } // save the response and the answer
                 guess[0].style.fill = guess[2] //resets the color of the picked element
-                document.getElementById('count').innerText = `Q: ${qNum + 2} of 40` //updates the question count
-                setPrompt(Que[qNum + 1])  //updates the display prompt with the current country to guess
-                if (qNum == 19 || qNum == 39) { // changes the board to the next map.
-                    if (test == 'europe') {
-                        quizE = dump
-                        if (guess[1] == Que[qNum]) {
-                            scoreEurope += 1
-                        }
-                        test = 'us'
-                        //qNum = 0
-                        setPrompt(sQue[0]);
-                        document.getElementById('EuropeMap').style.display = 'none';
-                        document.getElementById('header').style.backgroundColor = "#6467a2";
-                        document.getElementById('USMap').style.display = "block";
-                        scoreEurope = score
-                        score = 0
-                        qNum += 1
-                    } else if (test == 'us') {
-                        quizU = dump
-                        scoreUS = score
-                        test = 'results';
-                        makeResults()
-                        //qNum = 0
-                        //setPrompt(sQue[0]);
-                        document.getElementById('mapcontainer').style.display = "none";
-                        document.getElementById('header').style.backgroundColor = "#bf1d1d";
-                        document.getElementById('results').style.display = 'flex';
-                    }
-                } else {
-                    quiz[qNum] = cResponse
-                    // if (test == 'us'){
-                    //     quiz[qNum] = cResponse
-                    // } else {
-                    //     quiz[qNum] = cResponse
-                    // }
-                    if (guess[1] == Que[qNum]) {
-                        score += 1
-                    }
-                    qNum += 1
-                    //document.getElementById('count').innerText = `Q: ${qNum + 1} of 40`
-                    //guess[0].style.fill = guess[2]
-                    console.log(quiz)
+                if (qNum == 19 && test == 'europe') { // changes the board to the next map.
+                    test = 'us'
+                    setPrompt(sQue[0]);
+                    document.getElementById('EuropeMap').style.display = 'none';
+                    document.getElementById('header').style.backgroundColor = "#6467a2";
+                    document.getElementById('USMap').style.display = "block";
+                    scoreEurope = score
+                    score = 0
+                } else if (qNum == 39 && test == 'us') {
+                    scoreUS = score
+                    test = 'results';
+                    //setPrompt(sQue[0]);
+                    document.getElementById('mapcontainer').style.display = "none";
+                    document.getElementById('header').style.backgroundColor = "#bf1d1d";
+                    document.getElementById('results').style.display = 'flex';
                 }
+                quiz[qNum] = cResponse
+                scoreSet()
+                qNum += 1
+                document.getElementById('count').innerText = `Q: ${qNum} of 40` //updates the question count
+                setPrompt(Que[qNum])  //updates the display prompt with the current country to guess
+                console.log(quiz)
                 guessed = false
+                guess = [, ,]
+                makeResults()
             }
-            // if (guessed == true) {
-            //     guess[0].style.fill = guess[2]
-            //     document.getElementById('count').innerText = `Q: ${qNum + 2} of 40`
-            //     setPrompt(dQue[qNum+1])
-            //     if (qNum == 19 || qNum == 39) {
-            //         //  qNum = 0;
-            //         if (test == 'europe'){
-            //             test = 'us';
 
-            //             qNum = 0
-            //             //setPrompt(sQue[0]);
-            //             document.getElementById('EuropeMap').style.display = 'none';
-            //             document.getElementById('header').style.backgroundColor = "#6467a2";
-            //             document.getElementById('USMap').style.display = "block";
-            //             scoreEurope = score
-            //             score = 0
-            //         } else if (test == 'us') {
-            //             scoreUS = score
-            //             test = 'results';
-            //             makeResults()
-            //             qNum = 0
-            //             //setPrompt(sQue[0]);
-            //             document.getElementById('mapcontainer').style.display = "none";
-            //             document.getElementById('header').style.backgroundColor = "#bf1d1d";
-            //             document.getElementById('results').style.display = 'flex';
-            //         };
-
-            //     } else {
-            //         if (qNum <= 19) {
-            //             dump[qNum] = cResponse
-            //             if (test == 'europe') {
-            //                 quizE = dump
-            //                 if (guess[1] == dQue[qNum]) {
-            //                     scoreEurope += 1
-            //                 }
-            //             } else {
-            //                  quizU = dump
-            //                 if (guess[1] == dQue[qNum]) {
-            //                     scoreUS += 1
-            //                 }
-            //             }
-            //             qNum += 1
-            //             //document.getElementById('count').innerText = `Q: ${qNum + 1} of 40`
-            //             //guess[0].style.fill = guess[2]
-            //             console.log(quiz)
-
-            //         };
-            //     };
-            //     guessed = false;
-            // };
         });
 
 
