@@ -137,7 +137,7 @@
             <input id="iName" type="text">
             <a>Country of origin?</a>
             <!-- <input id="iOrigin" type="text"> -->
-            <select name="iOrigin" id="Origin">
+            <select name="iOrigin" id="iOrigin">
                 <option value='-----------'>-----------</option>
                 <option value='Afghanistan'>Afghanistan</option>
                 <option value='Albania'>Albania</option>
@@ -917,7 +917,7 @@ Place this code in the empty space below. */
                 document.getElementById("start-button").style.display = "none";
 
                 // Show the next content
-                document.getElementById("start-screen").style.display = "block";
+                document.getElementById("start-screen").style.display = "flex";
             }, 1000);  // This timeout matches the duration of the header transition
         });
 
@@ -991,6 +991,7 @@ Place this code in the empty space below. */
         };
         function sumbitData(){
             const quizRef = db.collection("scores-combined").add({
+                time: Date.now(),
                 name: document.getElementById('iName').value,
                 origin: document.getElementById('iOrigin').value,
                 quizResults: quiz
