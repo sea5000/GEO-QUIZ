@@ -1035,7 +1035,7 @@ Place this code in the empty space below. */
 
         document.getElementById('Qsubmit').addEventListener('click', () => {
             if (guessed == true) {
-
+                display = qNum + 2
                 let cResponse = { 'correct': correct(), 'answer': Que[qNum], 'guess': guess[1], 'test': test } // save the response and the answer
                 guess[0].style.fill = ''
                 //guess[0].style.fill = guess[2] //resets the color of the picked element
@@ -1045,12 +1045,13 @@ Place this code in the empty space below. */
                     document.getElementById('EuropeMap').style.display = 'none';
                     document.getElementById('header').style.backgroundColor = "#6467a2";
                     Array.from(document.getElementsByClassName('buttonE')).forEach(item => item.className = 'buttonS')
-                    document.getElementById('count').innerText = `Q: ${qNum + 1} of 40` //updates the question count
+                    document.getElementById('count').innerText = `Q: ${display} of 40` //updates the question count
                     document.getElementById('USMap').style.display = "block";
                     if (correct()) {
                         score += 1
                         //scoreSet()
                     }
+                    guessed = false
                     scoreEurope = score
                     score = 0
                     quiz[qNum] = cResponse
@@ -1071,14 +1072,29 @@ Place this code in the empty space below. */
                     quiz[qNum] = cResponse
                     makeResults()
                     sumbitData()
-                } else{
+                } else if (qNum == 0){
                     quiz[qNum] = cResponse
                     if (correct()) {
                         score += 1
                         //scoreSet()
                     }
+                    
+                    document.getElementById('count').innerText = `Q: ${display} of 40` //updates the question count
                     qNum += 1
-                    document.getElementById('count').innerText = `Q: ${qNum + 1} of 40` //updates the question count
+                    setPrompt(Que[qNum])  //updates the display prompt with the current country to guess
+                    console.log(quiz)
+                    guessed = false
+                    guess = [, ,]
+                    makeResults()
+                } else {
+                    quiz[qNum] = cResponse
+                    if (correct()) {
+                        score += 1
+                        //scoreSet()
+                    }
+                    
+                    document.getElementById('count').innerText = `Q: ${display} of 40` //updates the question count
+                    qNum += 1
                     setPrompt(Que[qNum])  //updates the display prompt with the current country to guess
                     console.log(quiz)
                     guessed = false
